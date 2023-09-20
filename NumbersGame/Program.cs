@@ -16,7 +16,7 @@ namespace NumbersGame
                 Console.WriteLine("Välkommen! Jag tänker på ett nummer. Kan du gissa vilket? Du får fem försök.");
 
                 Random random = new Random();
-                int number = random.Next(1, 21);
+                int randomNumber = random.Next(1, 21);
 
                 int tries = 0;
                 bool isCorrect = false;
@@ -24,9 +24,18 @@ namespace NumbersGame
                 while (tries < 5 && isCorrect == false)
                 {
                     // The user input is evaluated in the metod CheckGuess which then returns either false or true.
-                    int guess = Convert.ToInt32(Console.ReadLine());
-                    isCorrect = CheckGuess(number, guess);
-                    tries++;
+                    bool canParse = int.TryParse(Console.ReadLine(), out int guess);
+
+                    if (canParse)
+                    {
+                        isCorrect = CheckGuess(randomNumber, guess);
+                        tries++;
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("You may only enter integers.");
+                    }
                 }
 
                 if (isCorrect)
